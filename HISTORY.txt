@@ -1,0 +1,8 @@
+amlib History
+Homepage: http://maximenya.com/vcsreport
+E-Mail: a.maximenya@gmail.com
+
+Charts, dialogs, utils.
+
+1.0.1
++AboutDialog: icon size fixed
