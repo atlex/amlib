@@ -1,5 +1,5 @@
 amlib
-E-Mail: a.maximenya@gmail.com
+E-Mail: 4alex@mail.ru
 
 Charts, dialogs, utils.
 
