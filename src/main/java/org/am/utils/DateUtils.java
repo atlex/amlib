@@ -210,6 +210,28 @@ public class DateUtils {
         return addLeadingZero(hours) + COLON + addLeadingZero(minutes) + COLON + addLeadingZero(seconds) + POINT + addLeadingZero(milliseconds);
     }
 
+    public Date getDiff(Date startDate, Date endDate) {
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(startDate);
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(endDate);
+
+        long diff = endCal.getTimeInMillis() - startCal.getTimeInMillis();
+
+        int hours = (int) (diff / (3600000));
+        int minutes = (int) (diff / (60000));
+        int seconds = (int) (diff / 1000);
+        int milliseconds = (int) (diff % 1000);
+
+        Calendar result = Calendar.getInstance();
+        result.set(Calendar.HOUR, hours);
+        result.set(Calendar.MINUTE, minutes);
+        result.set(Calendar.SECOND, seconds);
+        result.set(Calendar.MILLISECOND, milliseconds);
+
+        return result.getTime();
+    }
+
     private static String addLeadingZero(int i) {
       if (i < 10) {
         return "0" + i;
