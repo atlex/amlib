@@ -38,6 +38,8 @@ public class FileUtils {
      */
     public static final String CHARSET_UTF8 = "utf-8";
 
+    public static final int STREAM_BUFFER_SIZE = 8192;
+
     /**
      * Writes the string to the file.
      *
@@ -301,6 +303,38 @@ public class FileUtils {
         } else {
             return file.listFiles(fileFilter);
         }
+    }
+
+    public static void copyStream(InputStream inputStream, OutputStream outputStream) throws IOException {
+        copyStream(inputStream, outputStream, STREAM_BUFFER_SIZE);
+    }
+
+    public static void copyStream(InputStream inputStream, OutputStream outputStream, int bufferSize) throws IOException {
+        BufferedInputStream bufferedInputStream = null;
+        try {
+            bufferedInputStream = new BufferedInputStream(inputStream, bufferSize);
+            byte[] buffer = new byte[bufferSize];
+            int available;
+            while ((available = bufferedInputStream.read(buffer)) >= 0) {
+                outputStream.write(buffer, 0, available);
+            }
+        } finally {
+            if (bufferedInputStream != null) {
+                bufferedInputStream.close();
+            }
+        }
+    }
+
+    public static InputStream getInputStreamCopy(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            copyStream(inputStream, byteArrayOutputStream);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+        return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
     }
      
     /**
